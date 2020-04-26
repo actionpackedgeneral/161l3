@@ -24,7 +24,7 @@ module aluControlUnit(
 		output reg [3:0] alu_out
     );
 	 always @ * begin
-	 case({alu_op,instruction_5_0}) begin
+	 case({alu_op,instruction_5_0})
 			7'b00XXXXXX: alu_out <= 4'b0010;
 			7'bX1XXXXXX: alu_out <= 4'b0110;
 			7'b1XXX0000: alu_out <= 4'b0010;
