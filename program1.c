@@ -13,8 +13,8 @@ void matrix_vector_multiply(long long *y, long long *A, long long *x, long long 
 }
 
 int main(int argc, char **argv) {
-
-   long long size = 30000;
+for(int i = 0; i < 31 ; i++){
+   long long size = i*1000;
    if (argc >= 2) size = atoi(argv[1]);
 
    // y = Ax
@@ -39,12 +39,12 @@ int main(int argc, char **argv) {
          return 1;
       }
 
-   printf("passed(%ld)\n", y[0]);
-   printf("%f",(double)((end - begin) / CLOCKS_PER_SEC));
+   //printf("passed(%ld)\n", y[0]);
+   printf("%f\n",(double)((end - begin) * 1000/ CLOCKS_PER_SEC));;
    free(A);
    free(x);
    free(y);
-
+}
    return 0;
 }
 

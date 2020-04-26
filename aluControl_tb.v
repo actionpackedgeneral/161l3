@@ -1,3 +1,5 @@
+
+  
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
 // Company: 
@@ -31,13 +33,13 @@ module aluControl_tb;
 	wire alu_src;
 	wire reg_write;
 
-	aluControl alu_control(
+	aluControlUnit aluControlUnit(
 	 .alu_op(alu_op) , 
     .instruction_5_0(instruction_5_0) , 
     .alu_out(alu_out)
     );
 	 
-	  controlUnit  control_unit(
+	  controlUnit  controlUnit(
 		.instr_op(instr_op) , 
 		.reg_dst(reg_dst),   
 		.branch(branch)    ,     
@@ -55,6 +57,8 @@ initial begin
 	totalTests = 0;
 	failedTests = 0;
 $write("instruction = 6'b00000");
+alu_op = 2'b00;
+instruction_5_0 = 6'b0000_00;
 			instr_op = 6'b00000;
         if (reg_dst && !alu_src && !mem_to_reg &&
 				reg_write && !mem_read && !mem_write &&
@@ -127,7 +131,7 @@ $write("instruction = 5'b000100");
 				failedTests = failedTests + 1;
         end
 totalTests = totalTests + 1;
-
+#100;
 $write("alu_instruction: 00");
 	alu_op = 2'b00;
 	if(alu_out == 4'b0010) begin
@@ -138,8 +142,9 @@ $write("alu_instruction: 00");
 		failedTests = failedTests + 1;
 		end
 	totalTests = totalTests + 1;
+	#100;
 $write("alu_instruction: X1");
-	alu_op = 2'bx1;
+	alu_op = 2'b01;
 	if(alu_out == 4'b0110) begin
 		$display("passed");
 		end
@@ -148,10 +153,10 @@ $write("alu_instruction: X1");
 		failedTests = failedTests + 1;
 		end
 	totalTests = totalTests + 1;
-	
+	#100;
 $write("alu_instruction: 1X instruction 5_0: XX0000 ");
-	alu_op = 2'b1x;
-	instruction_5_0 = 6'bxx0000;
+	alu_op = 2'b11;
+	instruction_5_0 = 6'b110000;
 	if(alu_out == 4'b0010) begin
 		$display("passed");
 		end
