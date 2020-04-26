@@ -40,7 +40,7 @@ module controlUnit(
 		mem_read <= 0;
 		mem_write <= 0;
 		branch <= 0;
-		alu_op[1:0] <= 2'b00;
+		alu_op[1:0] <= 2'b10;
 	  end
 	  6'b100011: begin
 		reg_dst <=0;

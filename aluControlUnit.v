@@ -23,18 +23,40 @@ module aluControlUnit(
 		input wire [5:0] instruction_5_0,
 		output reg [3:0] alu_out
     );
-	 always @ * begin
-	 case({alu_op,instruction_5_0})
-			7'b00XXXXXX: alu_out <= 4'b0010;
-			7'bX1XXXXXX: alu_out <= 4'b0110;
-			7'b1XXX0000: alu_out <= 4'b0010;
-			7'b1XXX0010: alu_out <= 4'b0110;
-			7'b1XXX0100: alu_out <= 4'b0000;
-			7'b1XXX0101: alu_out <= 4'b0001;
-			7'b1XXX1010: alu_out <= 4'b0111;
-			7'b1XXX0111: alu_out <= 4'b1100;
-	 
-	 endcase
+	 always @* begin
+	 if ( {alu_op,instruction_5_0} >= 8'b00_0000_00 &&
+			{alu_op,instruction_5_0} <= 8'b0100_0000) begin
+				alu_out = 4'b0010;
+	end
+		 if ( {alu_op,instruction_5_0} >= 8'b0100_0000 &&
+			{alu_op,instruction_5_0} <= 8'b0111_1111) begin
+				alu_out = 4'b0110;
+	end
+			 if ( {alu_op,instruction_5_0} >= 8'b1000_0000 &&
+			{alu_op,instruction_5_0} <= 8'b1111_0000) begin
+				alu_out = 4'b0010;
+	end
+				 if ( {alu_op,instruction_5_0} >= 8'b1000_0010 &&
+			{alu_op,instruction_5_0} <= 8'b1111_0010) begin
+				alu_out = 4'b0110;
+	end
+				 if ( {alu_op,instruction_5_0} >= 8'b1000_0100 &&
+			{alu_op,instruction_5_0} <= 8'b1111_0100) begin
+				alu_out = 4'b0000;
+	end
+					 if ( {alu_op,instruction_5_0} >= 8'b1000_0101 &&
+			{alu_op,instruction_5_0} <= 8'b1111_0101) begin
+				alu_out = 4'b0001;
+	end
+						 if ( {alu_op,instruction_5_0} >= 8'b1000_1010 &&
+			{alu_op,instruction_5_0} <= 8'b1111_1010) begin
+				alu_out = 4'b0111;
+	end
+						 if ( {alu_op,instruction_5_0} >= 8'b1000_0111 &&
+			{alu_op,instruction_5_0} <= 8'b1111_0111) begin
+				alu_out = 4'b1100;
+	end
+			
 
 end
 endmodule

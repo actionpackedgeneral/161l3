@@ -2,44 +2,45 @@
 #include <stdlib.h>
 #include <time.h>
 
-void matrix_vector_multiply(long long *c, long long *a, long long *b, long long n) {
-   long long i, j,k;
-for ( i=0; i<n; i++ )
-     for ( j=0; j<n; j++ ) {
-          register double t=C[i*n+j];
-          for ( k=0; k<n; k++ )
-                t+=A[i*n+k]*B[k*n+j];
-          C[i*n+j]=t;
-    }
+void matrix_vector_multiply(long long *y, long long *A, long long *x, long long size) {
+   long long i, j;
 
+   for (i = 0; i < size; ++i) {
+      for (j = 0; j < size; ++j) {
+         y[j] += A[j*size + i] * x[i];
+      }
+   }
 }
 
 int main(int argc, char **argv) {
-   long long size = 1000;
+
+   long long size = 30000;
    if (argc >= 2) size = atoi(argv[1]);
 
    // y = Ax
    long long *A = (long long *)malloc(sizeof(long long) * size * size);
-   long long *x = (long long *)malloc(sizeof(long long) * size*size);
-   long long *y = (long long *)malloc(sizeof(long long) * size*size);
+   long long *x = (long long *)malloc(sizeof(long long) * size);
+   long long *y = (long long *)calloc(size, sizeof(long long));
    long long i, j;
-   //printf("9");
+
    for (i = 0; i < size; ++i)
       for (j = 0; j < size; j++)
          A[i*size + j] = j;
 
    for (i = 0; i < size; ++i)
       x[i] = i;
-
-   //printf("%d\n",42
    clock_t begin = clock();
-
    matrix_vector_multiply(y, A, x, size);
    clock_t end = clock();
 
-   double time_spent = (double)(end -  begin) / CLOCKS_PER_SEC;
-   //printf("%d\n",52);
-   printf("passed(%f)\n",time_spent);
+   for (i = 1; i < size; ++i)
+      if (y[i] != y[i-1]) {
+         printf("failed\n");
+         return 1;
+      }
+
+   printf("passed(%ld)\n", y[0]);
+   printf("%f",(double)((end - begin) / CLOCKS_PER_SEC));
    free(A);
    free(x);
    free(y);
