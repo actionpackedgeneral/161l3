@@ -5,12 +5,10 @@
 void matrix_vector_multiply(long long *c, long long *a, long long *b, long long n) {
    long long i, j,k;
 for ( i=0; i<n; i++ )
-     for ( j=0; j<n; j++ ) {
-          register double t=C[i*n+j];
+     for ( j=0; j<n; j++ )
           for ( k=0; k<n; k++ )
-                t+=A[i*n+k]*B[k*n+j];
-          C[i*n+j]=t;
-    }
+                C[i*n+j]+=A[i*n+k]*B[k*n+j];
+
 
 }
 
