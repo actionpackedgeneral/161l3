@@ -72,6 +72,17 @@ module controlUnit(
 		branch <= 1;
 		alu_op[1:0] <= 2'b01;
 		end
+		6'b001000: begin
+			reg_dst <=1'bX;
+			alu_src <= 0;
+			mem_to_reg <=1'bX;
+			reg_write <=0;
+			mem_read <=0;
+			mem_write <= 0;
+			branch <= 1;
+			alu_op[1:0] <= 2'b01;
+		end
+		
 		
 	  endcase
 	 end
